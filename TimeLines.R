@@ -1,3 +1,5 @@
+# 시간대 별 손님 수 그래프 그리기
+
 library(ggplot2)
 library(dplyr)
 library(readxl)
