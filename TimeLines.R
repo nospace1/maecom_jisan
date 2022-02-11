@@ -18,12 +18,12 @@ str(maecom)
 
 maecom %>% filter(year(판매일자) == '2021') %>% 
   mutate(Hour = hour(hms(판매시간)), Month = month(판매일자), Month = case_when(
-    Month %in% c(12,1,2) ~ '겨울',
-    Month %in% c(3,4,5) ~ '봄',
-    Month %in% c(6,7,8) ~ '여름',
-    Month %in% c(9,10,11) ~ '가을',
+    Month %in% c(12,1,2) ~ 'Winter',
+    Month %in% c(3,4,5) ~ 'Spring',
+    Month %in% c(6,7,8) ~ 'Summer',
+    Month %in% c(9,10,11) ~ 'Autumn',
   )) %>%
-  filter(Month == '겨울') %>%
+  filter(Month == 'Winter') %>%
   group_by(Month, Hour) %>%
   summarise(NofCustomer = n()) %>%
   ggplot(aes(x=Hour, y=NofCustomer, colours = 'blue')) + 
@@ -31,6 +31,7 @@ maecom %>% filter(year(판매일자) == '2021') %>%
   scale_x_continuous(breaks=seq(10, 22, 2)) +
   geom_point(size=3, shape=19, colour="blue") +
   ylab('Number of Customer') +
+  ggtitle('Winter') +
   theme_bw() +
   theme(axis.text.y=element_blank())
 
