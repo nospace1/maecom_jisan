@@ -16,6 +16,8 @@ maecom <- maecom %>% select(판매일자, 판매시간, 매출금액) %>% na.omi
 maecom <- maecom %>% mutate(Time = substr(판매시간, 1,5))
 str(maecom)
 
+
+
 df_weather <- fread('weather.csv')
 head(df_weather)
 str(df_weather)
@@ -27,4 +29,22 @@ maecom %>% left_join(df_weather, by = c('판매일자' = 'Year', 'Time')) %>% na
 
 
 # 음식 메뉴 가져오기기
+df <- read_excel('AC170RM.xlsx', skip = 6) 
+df1 <- df %>% filter(!is.na(구분)) %>% select(구분, 메뉴명) %>% rowwise() %>% mutate(menu = case_when(
+  구분 == '판매' ~ 메뉴명
+)) %>% data.frame
+
+for(i in 1:nrow(df1)){
+  if(df1[i, '구분'] == '판매'){
+    df1[i, '구분'] <- df1[i-1, '구분']
+    df1[i, '메뉴명'] <- df1[i-1, '메뉴명']
+  }
+}
+head(df1,20)
+
+
+
+
+
+
 
